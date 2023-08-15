@@ -1,6 +1,7 @@
 'use server'
 import { NextResponse } from "next/server";
 import { validateToken } from "./app/functions/validateToken";
+import { users } from ".app/functions/getUsers"
 
 export const middleware = (request) => {
 
@@ -18,4 +19,6 @@ export const middleware = (request) => {
 export const config = {
     matcher: ['/', '/pages/dashboard']
 };
+
+listaUser.map()
 
