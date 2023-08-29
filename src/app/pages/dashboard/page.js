@@ -1,5 +1,3 @@
-import { getUsers } from "@/app/functions/handlerAcessAPI";
-
 export default async function Dashboard() {
    
     return (
