@@ -1,19 +1,28 @@
 'use client'
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
+import { postUser } from '@/app/functions/handlerAcessAPI';
 
-const formReg= () => {
+export default function formReg(){
   const [user, setUser] = useState({
     name: '',
     email: '',
     password: '',
   });
+  const { push } = useRouter();
+
 
   const handlerLogin = async (e) => {
     e.preventDefault();
-    toast.error('Erro na Aplicação');
+    try{
+      await postUser(user);
+      return push('/pages/dashboard');
+    }catch{
+          return toast.error("Erro na Aplicação");
+    }
   };
 
   return (
@@ -65,5 +74,3 @@ const formReg= () => {
     </div>
   );
 };
-
-export default formReg;

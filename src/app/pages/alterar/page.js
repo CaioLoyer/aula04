@@ -1,10 +1,11 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Link from 'next/link';
 
-const formAlt= () => {
+
+ export default function formAlt = () => {
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -66,4 +67,3 @@ const formAlt= () => {
   );
 };
 
-export default formAlt;

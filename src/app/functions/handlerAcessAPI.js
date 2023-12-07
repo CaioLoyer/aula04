@@ -1,41 +1,54 @@
 'use server'
 
-const userList = [
-    {
-        name:'Marcelino',
-        email:'marcelino@teste.com',
-        password:'1234' ,
-        token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-    },
-    {
-        name:'Caio',
-        email:'caio@teste.com',
-        password:'4567' ,
-        token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-    },
-    {
-        name:'teste',
-        email:'teste@teste.com',
-        password:'0000' ,
-        token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+import { cookies } from "next/dist/client/components/headers";
+
+const url ="https://aula-17-10-nu.vercel.app";
+
+const postUser = async (user) =>{
+    try{
+        const responseOfApi = await fetch(url +"/user",
+        {
+           method:"POST",
+           headers:{"Content-Type":"Application/json"},
+           body: JSON.stringify(user)
+        }
+        );
+        const userSave = await responseOfApi.json();
+        return userSave;
+    }catch{
+        return null
     }
-]
-
-const getUserAuthenticated = (userValor) => {
-    let userAuth = {}
-        userList.map((user) => {
-            if (user.email == userValor.email && user.password == userValor.password){
-                userAuth = user
-            }
-           }
-          )
-           return userAuth
-         }
-
-const getUsers = () =>{
-        return userList       
 }
 
-export { getUsers, getUserAuthenticated };
+const getUserAuthenticated = async (user) => {
+    console.log(user)
+    try{
+         const responseOfApi = await fetch(url +"/user/authenticated",
+         {
+            cache:"no-cache",
+            method:"POST",
+            headers:{"Content-Type":"Application/json"},
+            body: JSON.stringify(user)
+         }
+         );
+        const userAuth = await responseOfApi.json();
+        console.log(userAuth)
+        return userAuth;
+       
+    }catch{
+        
+    }
+}
+const getUsers = async() =>{
+   try{ const responseOfApi = await fetch(url +"/users",{// vai reenderizar a cada 10s
+        next:{revalidate :10}
+    });
+    const listUsers = responseOfApi.json();
+    return listUsers;
 
+    } catch{ 
+        return null 
+}
+}
 
+export { getUsers, getUserAuthenticated ,postUser};

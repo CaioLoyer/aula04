@@ -7,7 +7,6 @@ import 'react-toastify/dist/react-toastify.css';
 
 export default function Login() {
   const [user, setUser] = useState({
-    name: '',
     email: '',
     password: '',
   });

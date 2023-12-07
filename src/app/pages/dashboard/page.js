@@ -1,6 +1,6 @@
 import { getUsers } from "@/app/functions/handlerAcessAPI";
 import { Suspense } from "react";
-import ListUser from "@/app/components/ListUser";
+import ListUsers from "@/app/components/ListUsers";
 import Link from "next/link";
 
 export default async function Dashboard() {
@@ -9,10 +9,10 @@ export default async function Dashboard() {
         <div>
             <h1>Dashboard</h1>
             <Suspense fallback={<p>Loading...</p>}>
+                
+                <ListUsers user = {users}>{users.map((users) => (<p>{users.email}</p>))}
 
-                <ListUser user = {users}>{users.map((users) => (<p>{users.email}</p>))}
-
-                </ListUser>
+                </ListUsers>
             </Suspense>     
         </div>
     );
